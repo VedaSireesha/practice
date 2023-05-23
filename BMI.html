@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/d5f543fe2e.js" crossorigin="anonymous"></script>
+
+    <title>BMI</title>
+</head>
+
+<body>
+    <div class="calculator-container">
+        <h1>BMI CALCULATOR</h1>
+        <form id="bmi-form">
+            <div class="form-group">
+                <label for="height">Height (in cm):</label>
+                <input type="number" id="height" placeholder="Enter height" required>
+            </div>
+            <div class="form-group">
+                <label for="weight">Weight (in kg):</label>
+                <input type="number" id="weight" placeholder="Enter weight" required>
+            </div>
+            <button type="submit">Calculate BMI</button>
+        </form>
+        <div id="result" class="result-container"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    var form = document.getElementById("bmi-form");
+    var resultContainer = document.getElementById("result");
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        var heightInput = document.getElementById("height");
+        var weightInput = document.getElementById("weight");
+
+        var height = parseFloat(heightInput.value);
+        var weight = parseFloat(weightInput.value);
+
+        if (isNaN(height) || isNaN(weight) || height <= 0 || weight <= 0) {
+            resultContainer.textContent = "Invalid input";
+        } else {
+            var bmi = calculateBMI(height, weight);
+            var bmiCategory = getBMICategory(bmi);
+            var message = `Your BMI is ${bmi.toFixed(1)} (${bmiCategory})`;
+            resultContainer.textContent = message;
+        }
+    });
+
+    function calculateBMI(height, weight) {
+        var heightInMeters = height / 100;
+        return weight / (heightInMeters * heightInMeters);
+    }
+
+    function getBMICategory(bmi) {
+        if (bmi < 18.5) {
+            return "Underweight";
+        } else if (bmi >= 18.5 && bmi < 25) {
+            return "Normal weight";
+        } else if (bmi >= 25 && bmi < 30) {
+            return "Overweight";
+        } else {
+            return "Obese";
+        }
+    }
+});
+
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> 
+</body>
+</html>
